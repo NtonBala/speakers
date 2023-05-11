@@ -1,4 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+
+let localStateValue = undefined;
+
+function useState(initial) {
+  if (localStateValue === undefined) {
+    localStateValue = initial;
+  }
+
+  const setValue = (val) => {
+    localStateValue = val;
+  };
+
+  const retVals = [localStateValue, setValue];
+
+  return retVals;
+}
 
 // * Component is located on /demo path
 export default function Demo() {
