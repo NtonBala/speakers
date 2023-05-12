@@ -1,43 +1,34 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import DemoApp from './demoApp';
 
 let localStateValue = undefined;
 
-function useState(initial) {
-  if (localStateValue === undefined) {
-    localStateValue = initial;
+export default function Demo() {
+  function useMyState(initial) {
+    if (localStateValue === undefined) {
+      localStateValue = initial;
+    }
+
+    const setValue = (val) => {
+      localStateValue = val;
+      reRenderMe();
+    };
+
+    const retVals = [localStateValue, setValue];
+
+    return retVals;
   }
 
-  const setValue = (val) => {
-    localStateValue = val;
-  };
-
-  const retVals = [localStateValue, setValue];
-
-  return retVals;
-}
-
-// * Component is located on /demo path
-export default function Demo() {
-  const [text1, setText1] = useState('First');
-  const [text2, setText2] = useState('Second');
+  const [cnt, setCnt] = useState(0);
 
   useEffect(() => {
-    document.title = `${text1.length}`;
-  });
+    console.log('rerendering...');
+  }, [cnt]);
 
-  return (
-    <div className="container">
-      <h3>Simple State and Lifecycle Management</h3>
+  function reRenderMe() {
+    setCnt(cnt + 1);
+    console.log('reRenderMe called...');
+  }
 
-      <input type="text" onChange={(e) => setText1(e.target.value)} value={text1} />
-      <hr />
-      <input type="text" onChange={(e) => setText2(e.target.value)} value={text2} />
-      <hr />
-      <h2>
-        <i>
-          {text1} {text2}
-        </i>
-      </h2>
-    </div>
-  );
+  return <DemoApp useState={useMyState} />;
 }
