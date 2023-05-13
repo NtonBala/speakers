@@ -1,20 +1,24 @@
 import { useState, useEffect } from 'react';
 import DemoApp from './demoApp';
 
-let localStateValue = undefined;
+const localStateValues = [];
+let localStateValueIndex = 0;
 
 export default function Demo() {
   function useMyState(initial) {
-    if (localStateValue === undefined) {
-      localStateValue = initial;
+    const localStateValueIndexLocal = localStateValueIndex;
+    if (localStateValues[localStateValueIndexLocal] === undefined) {
+      localStateValues[localStateValueIndexLocal] = initial;
     }
 
     const setValue = (val) => {
-      localStateValue = val;
+      localStateValues[localStateValueIndexLocal] = val;
       reRenderMe();
     };
 
-    const retVals = [localStateValue, setValue];
+    localStateValueIndex++;
+
+    const retVals = [localStateValues[localStateValueIndexLocal], setValue];
 
     return retVals;
   }
@@ -29,6 +33,8 @@ export default function Demo() {
     setCnt(cnt + 1);
     console.log('reRenderMe called...');
   }
+
+  localStateValueIndex = 0;
 
   return <DemoApp useState={useMyState} />;
 }
