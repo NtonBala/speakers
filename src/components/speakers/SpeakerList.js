@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function List({ speakers, updateSpeaker }) {
-  const updatingId = 0; // 1269;
+  const [updatingId, setUpdatingId] = useState(0);
   const isPending = false;
 
   function toggleFavoriteSpeaker(speakerRec) {
@@ -12,7 +12,9 @@ function List({ speakers, updateSpeaker }) {
     updateSpeaker(speakerRecUpdated);
 
     async function updateAsync(rec) {
+      setUpdatingId(rec.id);
       await axios.put(`/api/speakers/${rec.id}`, speakerRecUpdated);
+      setUpdatingId(0);
     }
 
     updateAsync(speakerRecUpdated);
