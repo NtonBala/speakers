@@ -1,9 +1,14 @@
-import { useState, useReducer } from 'react';
+import { useReducer } from 'react';
 
 export default function Demo() {
-  // const [cnt, setCnt] = useState(10);
-  // * This code works exactly like useState did
-  const [cnt, setCnt] = useReducer((_, action) => action, 10);
+  const [cnt, setCnt] = useReducer((state, action) => {
+    switch (action.type) {
+      case 'increment':
+        return state + action.incrementValue;
+      default:
+        return state;
+    }
+  }, 10);
 
-  return <button onClick={() => setCnt(cnt + 1)}>{cnt}</button>;
+  return <button onClick={() => setCnt({ type: 'increment', incrementValue: 1 })}>{cnt}</button>;
 }
