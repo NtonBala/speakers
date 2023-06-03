@@ -1,15 +1,16 @@
 import SpeakerLine from './SpeakerLine';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 
-function List({ speakers, updateSpeaker }) {
+function List({ state, dispatch }) {
   const [updatingId, setUpdatingId] = useState(0);
   const isPending = false;
+  const { speakers } = state;
 
   function toggleFavoriteSpeaker(speakerRec) {
     const speakerRecUpdated = { ...speakerRec, favorite: !speakerRec.favorite };
 
-    updateSpeaker(speakerRecUpdated);
+    dispatch({ type: 'updateSpeaker', speaker: speakerRecUpdated });
 
     async function updateAsync(rec) {
       setUpdatingId(rec.id);
@@ -61,17 +62,35 @@ function List({ speakers, updateSpeaker }) {
 
 const SpeakerList = () => {
   const darkTheme = false;
-  const [speakers, setSpeakers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const initialState = {
+    speakers: [],
+    loading: true,
+  };
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case 'speakersLoaded':
+        return { ...state, loading: false, speakers: action.speakers };
+      case 'setLoadingStatus':
+        return { ...state, loading: true };
+      case 'updateSpeaker':
+        const speakerUpdated = state.speakers.map((rec) => (action.speaker.id === rec.id ? action.speaker : rec));
+
+        return { ...state, speakers: speakerUpdated };
+      default:
+        throw new Error(`case failure. type: ${action.type}`);
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     async function getDataAsync() {
-      setLoading(true);
+      dispatch({ type: 'setLoadingStatus' });
 
       const results = await axios.get('/api/speakers');
 
-      setSpeakers(results.data);
-      setLoading(false);
+      dispatch({ type: 'speakersLoaded', speakers: results.data });
     }
 
     getDataAsync();
@@ -83,11 +102,11 @@ const SpeakerList = () => {
     setSpeakers(speakersUpdated);
   }
 
-  if (loading) return <div>Loading...</div>;
+  if (state.loading) return <div>Loading...</div>;
 
   return (
     <div className={darkTheme ? 'theme-dark' : 'theme-light'}>
-      <List speakers={speakers} updateSpeaker={updateSpeaker} />
+      <List state={state} dispatch={dispatch} />
     </div>
   );
 };
