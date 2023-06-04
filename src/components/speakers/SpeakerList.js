@@ -96,12 +96,6 @@ const SpeakerList = () => {
     getDataAsync();
   }, []);
 
-  function updateSpeaker(speakerRec) {
-    const speakersUpdated = speakers.map((rec) => (speakerRec.id === rec.id ? speakerRec : rec));
-
-    setSpeakers(speakersUpdated);
-  }
-
   if (state.loading) return <div>Loading...</div>;
 
   return (
