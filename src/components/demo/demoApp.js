@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-// * Component is located on /demo path
+// * Component is located on /demo-usestate path
 export default function DemoApp({ useState }) {
   const [text1, setText1] = useState('First');
   const [text2, setText2] = useState('Second');
