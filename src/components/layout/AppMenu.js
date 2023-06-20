@@ -1,10 +1,13 @@
+import { useContext } from 'react';
+import { ThemeContext } from '../../App';
+
 export default function AppMenu() {
   const { setRoute } = {
     setRoute: (route) => {
       window.location.href = route;
     },
   };
-  const { toggleTheme } = { toggleTheme: () => {} };
+  const { toggleTheme } = useContext(ThemeContext);
 
   return (
     <header className="d-flex justify-content-center py-3">
@@ -13,7 +16,7 @@ export default function AppMenu() {
           <li className="nav-item">
             <button
               onClick={() => {
-                setRoute("/");
+                setRoute('/');
               }}
               className="nav-link"
             >
@@ -23,7 +26,7 @@ export default function AppMenu() {
           <li className="nav-item">
             <button
               onClick={() => {
-                setRoute("/speakerlist");
+                setRoute('/speakerlist');
               }}
               className="nav-link"
             >
@@ -33,7 +36,7 @@ export default function AppMenu() {
           <li className="nav-item">
             <button
               onClick={() => {
-                setRoute("/about");
+                setRoute('/about');
               }}
               className="nav-item nav-link"
             >
