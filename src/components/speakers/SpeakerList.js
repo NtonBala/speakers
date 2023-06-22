@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import SpeakerLine from './SpeakerLine';
 import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
-import { ThemeContext } from '../../App';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 function List({ state, dispatch }) {
   const [updatingId, setUpdatingId] = useState(0);
