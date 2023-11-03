@@ -1,8 +1,7 @@
-import { useContext } from 'react';
 import SpeakerLine from './SpeakerLine';
 import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
-import { ThemeContext } from '../../contexts/ThemeContext';
+import { useThemeContext } from '../../contexts/ThemeContext';
 
 function List({ state, dispatch }) {
   const [updatingId, setUpdatingId] = useState(0);
@@ -29,17 +28,9 @@ function List({ state, dispatch }) {
         <div className="btn-toolbar" role="toolbar" aria-label="Speaker toolbar filter">
           <div className="toolbar-trigger mb-3 flex-grow-04">
             <div className="toolbar-search w-100">
-              <input
-                value=""
-                onChange={(event) => {}}
-                type="text"
-                className="form-control"
-                placeholder="Highlight Names"
-              />
+              <input value="" onChange={(event) => {}} type="text" className="form-control" placeholder="Highlight Names" />
             </div>
-            <div className="spinner-height">
-              {isPending && <i className="spinner-border text-dark" role="status" />}
-            </div>
+            <div className="spinner-height">{isPending && <i className="spinner-border text-dark" role="status" />}</div>
           </div>
         </div>
       </div>
@@ -63,7 +54,7 @@ function List({ state, dispatch }) {
 }
 
 const SpeakerList = () => {
-  const { darkTheme } = useContext(ThemeContext);
+  const { darkTheme } = useThemeContext();
   const initialState = {
     speakers: [],
     loading: true,

@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import { ThemeContext } from '../../../pages/demo-context';
+import { useThemeContext } from '../../contexts/ThemeContext';
 
 export default function DemoUseContext() {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, setTheme } = useThemeContext();
   return (
     <div className="container">
       <h1>The Theme is: {theme}</h1>

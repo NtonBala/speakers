@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import { ThemeContext } from '../../contexts/ThemeContext';
+import { useThemeContext } from '../../contexts/ThemeContext';
 
 export default function AppMenu() {
   const { setRoute } = {
@@ -7,7 +6,7 @@ export default function AppMenu() {
       window.location.href = route;
     },
   };
-  const { toggleTheme } = useContext(ThemeContext);
+  const { toggleTheme } = useThemeContext();
 
   return (
     <header className="d-flex justify-content-center py-3">
