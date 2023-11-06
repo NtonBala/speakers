@@ -1,12 +1,13 @@
+import { useContext, useState } from 'react';
+import { SpeakersDataContext } from '../../contexts/SpeakersDataContext';
+
 export default function FavoriteSpeakerToggle({ speakerRec }) {
-  const { updateSpeaker } = { updateSpeaker: () => {} };
-  const [updating, setUpdating] = [false, () => {}];
+  const { updateSpeaker } = useContext(SpeakersDataContext);
+  const [updating, setUpdating] = useState(false);
 
   return (
     <button
-      className={
-        speakerRec.favorite ? "heartredbutton btn" : "heartdarkbutton btn"
-      }
+      className={speakerRec.favorite ? 'heartredbutton btn' : 'heartdarkbutton btn'}
       onClick={(e) => {
         e.preventDefault();
         const newSpeakerRec = {
@@ -19,9 +20,7 @@ export default function FavoriteSpeakerToggle({ speakerRec }) {
         });
       }}
     >
-      {updating ? (
-        <i className="spinner-border text-dark" role="status" />
-      ) : null}
+      {updating ? <i className="spinner-border text-dark" role="status" /> : null}
     </button>
   );
 }

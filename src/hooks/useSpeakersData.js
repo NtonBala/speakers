@@ -1,4 +1,4 @@
-import { useGeneralizedCrudMethods } from './useGeneralizedCrudMethods';
+import { useGeneralizedCrudMethods } from './useGeneralizedCrudMehtods';
 
 export const useSpeakersData = () => {
   const url = '/api/speakers';
