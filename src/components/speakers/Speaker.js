@@ -19,10 +19,10 @@ function Inner({ id }) {
   );
 }
 
-export default function Speaker({ id }) {
+export default function Speaker(props) {
   return (
     <SpeakersDataProvider>
-      <Inner id={id} />
+      <Inner {...props} />
     </SpeakersDataProvider>
   );
 }
