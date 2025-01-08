@@ -1,9 +1,11 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
+import { SpeakerMenuContext } from '../../contexts/SpeakerMenuContext';
 
 export default function SpeakerImageToggleOnScroll({ imageUrl, alt, thumbNail }) {
   const [inView, setInView] = useState(false);
   const imageRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { speakingSaturday, speakingSunday, searchText } = useContext(SpeakerMenuContext);
 
   function scrollHandler() {
     setInView(isInView());
@@ -17,7 +19,7 @@ export default function SpeakerImageToggleOnScroll({ imageUrl, alt, thumbNail })
     return () => {
       window.removeEventListener('scroll', scrollHandler);
     };
-  }, []);
+  }, [speakingSaturday, speakingSunday, searchText]);
 
   function isInView() {
     const rect = imageRef.current.getBoundingClientRect();
